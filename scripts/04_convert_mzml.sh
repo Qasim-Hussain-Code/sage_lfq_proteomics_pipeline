@@ -108,14 +108,25 @@ for line in "${LINES[@]}"; do
     echo "04_convert_mzml: [${i}/${TOTAL}] converting ${run}"
     PARTIAL="${mzml}"
     t0="$(date +%s)"
-    # -f=1 selects indexed mzML, -g gzips it, -p centroids. Centroided data is
-    # what Sage wants and it is several times smaller than profile. The RAW
-    # files carry centroided spectra already, so -p is close to a no-op here,
-    # but it makes the output independent of how the file was acquired.
+    # --format=1 is plain mzML, --gzip compresses it, and peak picking is
+    # left alone because the Thermo library centroids by default.
+    #
+    # Three things here cost me failed runs and are worth stating plainly.
+    # The per-file output flag is --output (-b); --output_file is not an
+    # option and the tool answers it by printing usage and exiting non-zero.
+    # --noPeakPicking is a switch to DISABLE centroiding, so passing it
+    # "false" asks for the opposite of its name and is not valid syntax.
+    # And format 2, indexed mzML, is broken in combination with --gzip in
+    # ThermoRawFileParser 2.0.0.dev: it writes the .gz correctly, then tries
+    # to reopen the file under its uncompressed name to append the index and
+    # dies with FileNotFoundException on "...mzML" after two minutes of work.
+    # Plain mzML skips the index pass. Sage does not need the index, and the
+    # output is half the size: 417 MB against 808 MB for this run, a ratio
+    # of 0.137 rather than 0.266.
     measure_run "04_convert:${run}" \
         conda run --no-capture-output --name "${CONDA_ENV_MS}" \
-        ThermoRawFileParser --input="${raw}" --output_file="${mzml}" \
-        --format=1 --gzip --noPeakPicking=false >/dev/null
+        ThermoRawFileParser --input="${raw}" --output="${mzml}" \
+        --format=1 --gzip >/dev/null
     t1="$(date +%s)"
 
     # Verify the file before deleting the only other copy of these spectra.
