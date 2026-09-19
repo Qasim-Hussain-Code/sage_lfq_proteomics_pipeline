@@ -132,9 +132,11 @@ fi
 
 SEARCH_FASTA="${FASTA_DIR}/search_database.fasta"
 if [[ "${WITH_CRAP}" == "true" && -f "${CRAP_FASTA}" ]]; then
-    cat "${TARGET_FASTA}" "${CRAP_FASTA}" > "${SEARCH_FASTA}"
+    # awk 1, not cat. See 06_entrapment.sh: a source file without a trailing
+    # newline makes cat weld two records together.
+    awk 1 "${TARGET_FASTA}" "${CRAP_FASTA}" > "${SEARCH_FASTA}"
 else
-    cp "${TARGET_FASTA}" "${SEARCH_FASTA}"
+    awk 1 "${TARGET_FASTA}" > "${SEARCH_FASTA}"
 fi
 N_CRAP=0
 [[ -f "${CRAP_FASTA}" && "${WITH_CRAP}" == "true" ]] && N_CRAP="$(grep -c '^>' "${CRAP_FASTA}")"

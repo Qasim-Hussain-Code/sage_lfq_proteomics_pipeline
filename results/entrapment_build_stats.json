@@ -1,0 +1,15 @@
+{
+  "seed": 20260919,
+  "entrapment_mode": "shuffled",
+  "entrapment_ratio_r": 1,
+  "entrapment_prefix": "ENT_",
+  "target_proteins_shuffled": 2100,
+  "contaminant_proteins_skipped": 0,
+  "paired_peptides": 158951,
+  "distinct_target_peptides": 159031,
+  "fully_cleaved_fragments_unshufflable": 4,
+  "proteins_dropped_for_site_mismatch": 0,
+  "missed_cleavages": 2,
+  "min_len": 7,
+  "max_len": 50
+}

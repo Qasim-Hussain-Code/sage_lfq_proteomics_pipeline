@@ -1,6 +1,6 @@
 # Search database provenance
 # Written by scripts/02_fetch_fasta.sh
-downloaded_utc          2026-09-19T13:05:30Z
+downloaded_utc          2026-09-19T13:16:55Z
 uniprot_proteome        UP000000762
 uniprot_taxid           401614
 uniprot_release         2026_03
@@ -13,6 +13,6 @@ contaminant_prefix      Cont_
 search_db_sequences     2100
 target_fasta_md5        3d3ca19b184c4fbf71237753917ed8aa
 target_fasta_sha256     42482eb26759400158603591efedf9a3b2e80834575e8bc391df93b060674224
-search_fasta_md5        1702db37805a8a80d82d490d0bb2b63f
-search_fasta_sha256     c5bd8edbe860d0ca62f14e423b15ee87e6ecb57290083e49a049ee36d546239e
+search_fasta_md5        7cba74ab455754ba26d5f65bab230be1
+search_fasta_sha256     a9a6e90ce9b76579fa97b0fec65a837e65dfc9e1b4940b488c684f87c575193e
 decoys                  generated internally by Sage, not present in this file

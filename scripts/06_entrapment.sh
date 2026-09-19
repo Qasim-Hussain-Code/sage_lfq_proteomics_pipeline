@@ -85,7 +85,11 @@ else
         sed 's/^>/>ENT_/' "${FOREIGN}" > "${ENT_ONLY}"
         printf 'target_peptide\tentrapment_peptide\n' > "${PAIRING}"
     fi
-    cat "${TARGET_FASTA}" "${ENT_ONLY}" > "${COMBINED}"
+    # awk 1 rather than cat: the contaminant FASTA does not end in a
+    # newline, and cat would fuse its last sequence line onto the first
+    # entrapment header, silently destroying one record and orphaning the
+    # sequence after it. This cost me a corrupted database once already.
+    awk 1 "${TARGET_FASTA}" "${ENT_ONLY}" > "${COMBINED}"
 fi
 
 N_TGT="$(grep -c '^>' "${TARGET_FASTA}")"
