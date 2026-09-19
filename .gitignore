@@ -1,0 +1,36 @@
+# Raw and converted mass spectrometry data. A single Q Exactive RAW file from
+# PXD001584 is about 2.6 GiB and there are eighteen of them, so nothing under
+# data/ is ever tracked. Committing one of these to git is close to
+# unrecoverable, which is why this file is the first commit in the repository.
+data/
+*.raw
+*.RAW
+*.mzML
+*.mzML.gz
+*.mzid
+*.pin
+
+# Search engine intermediates that are large and fully regenerable.
+*.sage.tsv
+fragment_index/
+
+# R session state
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+renv/library/
+renv/staging/
+
+# BiocFileCache, which R packages populate on first use
+.cache/BiocFileCache/
+BiocFileCache/
+
+# Conda environment directories, if created inside the project
+envs/
+.conda/
+
+# Editor and OS noise
+*.swp
+.DS_Store
+__pycache__/
