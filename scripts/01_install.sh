@@ -82,10 +82,21 @@ if [[ "${MS_ONLY}" != "true" ]]; then
     # QFeatures and msqrob2 come from bioconda's Bioconductor mirror. Building
     # these from source against a bare R takes a long time and needs a
     # compiler toolchain; the conda binaries do not.
+    #
+    # The Bioconductor packages are pinned and r-base is not. Asking for an
+    # unpinned "r-base bioconductor-qfeatures bioconductor-msqrob2" instead
+    # gave me a solve that quietly settled on R 4.3.3 and omitted QFeatures,
+    # msqrob2 and MsCoreUtils altogether, leaving an environment that looked
+    # installed and was missing everything that matters. Pinning the three
+    # Bioconductor packages forces the solver to pick an R that can satisfy
+    # them rather than an R that cannot. Versions are the bioconda latest as
+    # of 2026-09-19; check for newer ones before reusing this.
     create_env "${CONDA_ENV_R}" \
         --channel conda-forge --channel bioconda \
-        r-base bioconductor-qfeatures bioconductor-msqrob2 \
-        bioconductor-mscoreutils bioconductor-limma bioconductor-biocparallel \
+        "bioconductor-qfeatures=${QFEATURES_VERSION:-1.20.0}" \
+        "bioconductor-msqrob2=${MSQROB2_VERSION:-1.18.0}" \
+        "bioconductor-mscoreutils=${MSCOREUTILS_VERSION:-1.22.1}" \
+        bioconductor-limma bioconductor-biocparallel \
         r-ggplot2 r-data.table r-ggrepel r-patchwork
 fi
 
