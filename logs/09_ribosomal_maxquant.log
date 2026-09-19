@@ -1,0 +1,35 @@
+                          metric
+                         keyword
+                   fdr_threshold
+                 proteins_tested
+         keyword_proteins_tested
+            proteins_significant
+    keyword_proteins_significant
+ keyword_fraction_of_significant
+      keyword_fraction_of_tested
+               fisher_odds_ratio
+                        fisher_p
+            median_logFC_keyword
+              median_logFC_other
+                      wilcoxon_p
+                    keyword_down
+                      keyword_up
+                     sign_test_p
+                                              value
+ (30S|50S|large|small) ribosomal (subunit )?protein
+                                               0.05
+                                               1115
+                                                 50
+                                                202
+                                                 30
+                                             0.1485
+                                             0.0448
+                                             7.7659
+                                          1.397e-11
+                                            -0.3625
+                                            -0.0478
+                                          4.423e-17
+                                                 50
+                                                  0
+                                          1.776e-15
+biological_readout.R: 50/50 (30S|50S|large|small) ribosomal (subunit )?protein proteins have negative logFC

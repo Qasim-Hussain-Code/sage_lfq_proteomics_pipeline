@@ -1,0 +1,18 @@
+                          metric             value
+                         keyword ribosomal protein
+                   fdr_threshold              0.05
+                 proteins_tested              1175
+         keyword_proteins_tested                 3
+            proteins_significant                25
+    keyword_proteins_significant                 0
+ keyword_fraction_of_significant                 0
+      keyword_fraction_of_tested            0.0026
+               fisher_odds_ratio                 0
+                        fisher_p                 1
+            median_logFC_keyword           -0.0926
+              median_logFC_other           -0.0252
+                      wilcoxon_p            0.7009
+                    keyword_down                 2
+                      keyword_up                 1
+                     sign_test_p                 1
+biological_readout.R: 2/3 ribosomal protein proteins have negative logFC

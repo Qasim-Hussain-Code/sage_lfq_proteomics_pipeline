@@ -1,65 +1,65 @@
 {
   "entrapment_ratio_r": 1.0,
   "score_column": "sage_discriminant_score",
-  "n_psm_rows": 40361,
+  "n_psm_rows": 215350,
   "results": {
     "0.01": {
       "psm": {
-        "n_target": 10508,
-        "n_entrapment": 70,
-        "combined_eq1": 0.013235016071090943,
-        "lower_bound_eq2": 0.006617508035545471,
-        "sample_eq3": 0.006661591168633422,
+        "n_target": 56860,
+        "n_entrapment": 293,
+        "combined_eq1": 0.010253180060539255,
+        "lower_bound_eq2": 0.005126590030269627,
+        "sample_eq3": 0.005153007386563489,
         "paired_eq4": null
       },
       "peptide": {
-        "n_target": 4940,
-        "n_entrapment": 44,
-        "cutoff_score": 1.2038049,
-        "n_E_ge_s_gt_T": 34,
-        "n_E_gt_T_ge_s": 0,
-        "n_entrapment_unpairable": 2,
-        "combined_eq1": 0.01765650080256822,
-        "lower_bound_eq2": 0.00882825040128411,
-        "sample_eq3": 0.008906882591093117,
-        "paired_eq4": 0.01565008025682183
+        "n_target": 6801,
+        "n_entrapment": 39,
+        "cutoff_score": 1.176475,
+        "n_E_ge_s_gt_T": 26,
+        "n_E_gt_T_ge_s": 2,
+        "n_entrapment_unpairable": 1,
+        "combined_eq1": 0.011403508771929825,
+        "lower_bound_eq2": 0.005701754385964913,
+        "sample_eq3": 0.005734450816056462,
+        "paired_eq4": 0.010087719298245614
       },
       "protein": {
-        "n_target": 1013,
-        "n_entrapment": 8,
-        "combined_eq1": 0.015670910871694418,
-        "lower_bound_eq2": 0.007835455435847209,
-        "sample_eq3": 0.007897334649555774,
+        "n_target": 1183,
+        "n_entrapment": 7,
+        "combined_eq1": 0.011764705882352941,
+        "lower_bound_eq2": 0.0058823529411764705,
+        "sample_eq3": 0.005917159763313609,
         "paired_eq4": null
       }
     },
     "0.05": {
       "psm": {
-        "n_target": 11350,
-        "n_entrapment": 332,
-        "combined_eq1": 0.056839582263311074,
-        "lower_bound_eq2": 0.028419791131655537,
-        "sample_eq3": 0.029251101321585902,
+        "n_target": 61381,
+        "n_entrapment": 1688,
+        "combined_eq1": 0.05352867494331605,
+        "lower_bound_eq2": 0.026764337471658024,
+        "sample_eq3": 0.02750036656294293,
         "paired_eq4": null
       },
       "peptide": {
-        "n_target": 5345,
-        "n_entrapment": 182,
-        "cutoff_score": 1.0539165,
-        "n_E_ge_s_gt_T": 146,
-        "n_E_gt_T_ge_s": 1,
-        "n_entrapment_unpairable": 8,
-        "combined_eq1": 0.06585851275556359,
-        "lower_bound_eq2": 0.032929256377781796,
-        "sample_eq3": 0.034050514499532274,
-        "paired_eq4": 0.059706893432241726
+        "n_target": 7386,
+        "n_entrapment": 215,
+        "cutoff_score": 1.060065,
+        "n_E_ge_s_gt_T": 148,
+        "n_E_gt_T_ge_s": 3,
+        "n_entrapment_unpairable": 12,
+        "combined_eq1": 0.056571503749506646,
+        "lower_bound_eq2": 0.028285751874753323,
+        "sample_eq3": 0.029109125372326024,
+        "paired_eq4": 0.048546243915274304
       },
       "protein": {
-        "n_target": 1072,
-        "n_entrapment": 55,
-        "combined_eq1": 0.09760425909494233,
-        "lower_bound_eq2": 0.048802129547471165,
-        "sample_eq3": 0.051305970149253734,
+        "n_target": 1242,
+        "n_entrapment": 45,
+        "combined_eq1": 0.06993006993006994,
+        "lower_bound_eq2": 0.03496503496503497,
+        "sample_eq3": 0.036231884057971016,
         "paired_eq4": null
       }
     }

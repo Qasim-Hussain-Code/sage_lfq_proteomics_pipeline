@@ -1,5 +1,4 @@
 {
-  "version": "0.14.6",
   "database": {
     "bucket_size": 8192,
     "enzyme": {
@@ -34,15 +33,10 @@
     "max_variable_mods": 2,
     "decoy_tag": "rev_",
     "generate_decoys": true,
-    "fasta": "/home/qasim/file/sage_lfq_proteomics_pipeline/data/fasta/target_plus_entrapment.fasta"
+    "fasta": "/home/qasim/file/sage_lfq_proteomics_pipeline/data/fasta/search_database.fasta"
   },
   "quant": {
-    "tmt": null,
-    "tmt_settings": {
-      "level": 3,
-      "sn": false
-    },
-    "lfq": false,
+    "lfq": true,
     "lfq_settings": {
       "peak_scoring": "Hybrid",
       "integration": "Sum",
@@ -74,12 +68,14 @@
   "deisotope": true,
   "chimera": false,
   "wide_window": false,
+  "predict_rt": true,
   "min_peaks": 15,
   "max_peaks": 150,
-  "max_fragment_charge": 2,
   "min_matched_peaks": 4,
+  "max_fragment_charge": 2,
   "report_psms": 1,
-  "predict_rt": false,
+  "parallel": false,
+  "output_directory": "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage",
   "mzml_paths": [
     "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n3_1_1200.mzML.gz",
     "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n4_1_1212.mzML.gz",
@@ -87,9 +83,5 @@
     "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n3_1_1206.mzML.gz",
     "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n4_1_1218.mzML.gz",
     "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n5_1_1230.mzML.gz"
-  ],
-  "output_paths": [
-    "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage_entrapment/results.sage.tsv",
-    "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage_entrapment/results.json"
   ]
 }

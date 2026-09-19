@@ -1,0 +1,7 @@
+run	raw_file	sample	genotype	arginine_uM	timepoint	biorep	techrep	run_id	acq_date	size_bytes	url
+20141119_AlCH_1WT_20_2h_n3_1_1200	20141119_AlCH_1WT_20_2h_n3_1_1200.raw	1WT_20_2h_n3_1	WT	20	2h	n3	1	1200	20141119	3037044458	ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2015/01/PXD001584/20141119_AlCH_1WT_20_2h_n3_1_1200.raw
+20141119_AlCH_1WT_20_2h_n4_1_1212	20141119_AlCH_1WT_20_2h_n4_1_1212.raw	1WT_20_2h_n4_1	WT	20	2h	n4	1	1212	20141119	2894247969	ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2015/01/PXD001584/20141119_AlCH_1WT_20_2h_n4_1_1212.raw
+20141119_AlCH_1WT_20_2h_n5_1_1224	20141119_AlCH_1WT_20_2h_n5_1_1224.raw	1WT_20_2h_n5_1	WT	20	2h	n5	1	1224	20141119	2837531276	ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2015/01/PXD001584/20141119_AlCH_1WT_20_2h_n5_1_1224.raw
+20141119_AlCH_3D8_20_2h_n3_1_1206	20141119_AlCH_3D8_20_2h_n3_1_1206.raw	3D8_20_2h_n3_1	argP_KO	20	2h	n3	1	1206	20141119	2885962469	ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2015/01/PXD001584/20141119_AlCH_3D8_20_2h_n3_1_1206.raw
+20141119_AlCH_3D8_20_2h_n4_1_1218	20141119_AlCH_3D8_20_2h_n4_1_1218.raw	3D8_20_2h_n4_1	argP_KO	20	2h	n4	1	1218	20141119	2628497219	ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2015/01/PXD001584/20141119_AlCH_3D8_20_2h_n4_1_1218.raw
+20141119_AlCH_3D8_20_2h_n5_1_1230	20141119_AlCH_3D8_20_2h_n5_1_1230.raw	3D8_20_2h_n5_1	argP_KO	20	2h	n5	1	1230	20141119	2702759515	ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2015/01/PXD001584/20141119_AlCH_3D8_20_2h_n5_1_1230.raw

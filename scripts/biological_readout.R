@@ -31,7 +31,21 @@ if ("--help" %in% args || length(args) == 0) {
 res_file <- parse_arg("--results")
 ann_file <- parse_arg("--annotation")
 out_file <- parse_arg("--out")
-keyword  <- parse_arg("--keyword", "ribosomal protein")
+# The two search databases name ribosomal proteins differently, and a naive
+# keyword silently breaks on one of them. NCBI, which the authors searched,
+# writes "30S ribosomal protein S12". UniProt, which this pipeline searches,
+# has moved to "Small ribosomal subunit protein uS12", and that string does
+# not contain "ribosomal protein" at all. Matching the plain phrase found 55
+# proteins in the MaxQuant annotation and 4 in the UniProt one, which looks
+# like biology and is entirely nomenclature.
+#
+# The anchored form below matches both conventions. It also drops the
+# enzymes that act on ribosomal proteins rather than being ribosomal
+# proteins, such as "Ribosomal protein uL3 glutamine methyltransferase" and
+# "ribosomal protein S12 methylthiotransferase RimO", because those have no
+# 30S/50S/large/small prefix. That exclusion is applied to both arms by the
+# same regex, not chosen per arm.
+keyword  <- parse_arg("--keyword", "(30S|50S|large|small) ribosomal (subunit )?protein")
 fdr_cut  <- as.numeric(parse_arg("--fdr", "0.05"))
 
 res <- read.delim(res_file, stringsAsFactors = FALSE)

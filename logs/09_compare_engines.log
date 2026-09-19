@@ -1,0 +1,21 @@
+compare_engines.R: 62 of 1175 Sage protein groups had no RefSeq cross-reference
+compare_engines.R: 1113 Sage / 981 MaxQuant testable proteins, 922 shared
+                         metric      value
+                  peptides_sage  7038.0000
+              peptides_maxquant 10693.0000
+            protein_groups_sage  1175.0000
+        protein_groups_maxquant  1106.0000
+ sage_groups_unmapped_to_refseq    62.0000
+                  testable_sage  1113.0000
+              testable_maxquant   981.0000
+                testable_shared   922.0000
+               jaccard_testable     0.7867
+               significant_sage    21.0000
+           significant_maxquant     3.0000
+             significant_shared     3.0000
+            jaccard_significant     0.1429
+              spearman_t_shared     0.7434
+          spearman_logFC_shared     0.7014
+           pearson_logFC_shared     0.5849
+                 top100_overlap    42.0000
+compare_engines.R: wrote engine_comparison.tsv and engine_comparison_per_protein.tsv

@@ -1,0 +1,48 @@
+differential.R: 7038 peptide rows, 6 runs
+differential.R: 174 zero intensities recoded as NA (0.4 percent of cells)
+differential.R: 0 decoy, 129 contaminant, 0 entrapment peptides removed
+differential.R: 9 peptides from non-minimal protein groups removed
+differential.R: 1 peptides seen in fewer than 2 cultures removed; 6899 remain
+differential.R: median-of-ratios offsets range -0.232 to 0.446
+Your quantitative data contain missing values. Please read the relevant
+section(s) in the aggregateFeatures manual page regarding the effects
+of missing values on data aggregation.
+Aggregated: 1/1
+There were 50 or more warnings (use warnings() to see the first 50)
+differential.R: 1175 protein groups after robustSummary
+differential.R: contrast: genotypeargP_KO = 0
+differential.R: runs per culture: argP_KO_n3=1, argP_KO_n4=1, argP_KO_n5=1, WT_n3=1, WT_n4=1, WT_n5=1
+differential.R: every culture contributes one run, so (1 | culture) is not identifiable.
+differential.R: fitting ~ genotype only. Here that is the correct model, not the naive one.
+There were 50 or more warnings (use warnings() to see the first 50)
+differential.R: naive: 1175 proteins, 0 fitError, 25 significant at 5 percent FDR
+                    metric value
+1          proteins_tested  1175
+2    sig_single_model_5pct    25
+3    fitError_single_model     0
+4   median_df_single_model     6
+5 mixed_model_identifiable     0
+differential.R: sensitivity sweep over --min-cultures
+Your quantitative data contain missing values. Please read the relevant
+section(s) in the aggregateFeatures manual page regarding the effects
+of missing values on data aggregation.
+Aggregated: 1/1
+Your quantitative data contain missing values. Please read the relevant
+section(s) in the aggregateFeatures manual page regarding the effects
+of missing values on data aggregation.
+Aggregated: 1/1
+Your quantitative data contain missing values. Please read the relevant
+section(s) in the aggregateFeatures manual page regarding the effects
+of missing values on data aggregation.
+Aggregated: 1/1
+Your quantitative data contain missing values. Please read the relevant
+section(s) in the aggregateFeatures manual page regarding the effects
+of missing values on data aggregation.
+Aggregated: 1/1
+  min_cultures peptides proteins significant_5pct
+1            2     6899     1175               25
+2            3     6891     1175               25
+3            4     6881     1175               25
+4            5     6855     1173               25
+There were 50 or more warnings (use warnings() to see the first 50)
+differential.R: done

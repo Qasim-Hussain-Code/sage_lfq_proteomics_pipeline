@@ -1,0 +1,8 @@
+figures.R: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/figures/sage_normalisation_densities.png
+figures.R: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/figures/sage_volcano_mixed.png
+figures.R: skip model comparison, no /home/qasim/file/sage_lfq_proteomics_pipeline/results/sage_model_comparison.tsv
+figures.R: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/figures/sage_ribosomal_logfc.png
+figures.R: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/figures/entrapment_fdr_assessment.png
+figures.R: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/figures/engine_logfc_scatter.png
+figures.R: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/figures/sage_threshold_sensitivity.png
+figures.R: done

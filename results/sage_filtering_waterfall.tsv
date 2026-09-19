@@ -1,0 +1,7 @@
+step	features
+imported	7038
+log2 transformed	7038
+decoys/contaminants removed	6909
+shared peptides removed	6900
+observed in >= 2 cultures	6899
+protein groups	1175

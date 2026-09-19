@@ -1,17 +1,17 @@
 metric	value
-keyword	ribosomal protein
+keyword	(30S|50S|large|small) ribosomal (subunit )?protein
 fdr_threshold	0.05
 proteins_tested	1115
-keyword_proteins_tested	52
+keyword_proteins_tested	50
 proteins_significant	202
 keyword_proteins_significant	30
 keyword_fraction_of_significant	0.1485
-keyword_fraction_of_tested	0.0466
-fisher_odds_ratio	7.0453
-fisher_p	5.719e-11
+keyword_fraction_of_tested	0.0448
+fisher_odds_ratio	7.7659
+fisher_p	1.397e-11
 median_logFC_keyword	-0.3625
 median_logFC_other	-0.0478
-wilcoxon_p	1.034e-16
-keyword_down	51
-keyword_up	1
-sign_test_p	2.354e-14
+wilcoxon_p	4.423e-17
+keyword_down	50
+keyword_up	0
+sign_test_p	1.776e-15

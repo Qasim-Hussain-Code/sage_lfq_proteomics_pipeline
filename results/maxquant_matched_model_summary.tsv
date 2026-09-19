@@ -1,0 +1,6 @@
+metric	value
+proteins_tested	1106
+sig_single_model_5pct	3
+fitError_single_model	120
+median_df_single_model	6.42
+mixed_model_identifiable	0

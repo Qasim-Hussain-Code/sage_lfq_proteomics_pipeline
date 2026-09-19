@@ -1,2 +1,0 @@
-run	raw_file	expected_bytes	observed_bytes	sha256	status
-20141119_AlCH_1WT_20_2h_n3_1_1200	20141119_AlCH_1WT_20_2h_n3_1_1200.raw	3037044458	3037044458	2936254fa07e02b986d717392d7639e434555b85dde22020bd43866c210d8dfe	downloaded

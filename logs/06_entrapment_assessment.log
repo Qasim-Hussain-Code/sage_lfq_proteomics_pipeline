@@ -1,0 +1,7 @@
+assess_entrapment: 215350 PSM rows, scoring on sage_discriminant_score
+assess_entrapment: nominal_fdr=0.01  level=psm  n_target=56860  n_entrapment=293  combined_eq1=0.01025  lower_bound_eq2=0.00513  sample_eq3=0.00515  paired_eq4=NA  controlled=inconclusive
+assess_entrapment: nominal_fdr=0.01  level=peptide  n_target=6801  n_entrapment=39  combined_eq1=0.01140  lower_bound_eq2=0.00570  sample_eq3=0.00573  paired_eq4=0.01009  controlled=inconclusive
+assess_entrapment: nominal_fdr=0.01  level=protein  n_target=1183  n_entrapment=7  combined_eq1=0.01176  lower_bound_eq2=0.00588  sample_eq3=0.00592  paired_eq4=NA  controlled=inconclusive
+assess_entrapment: nominal_fdr=0.05  level=psm  n_target=61381  n_entrapment=1688  combined_eq1=0.05353  lower_bound_eq2=0.02676  sample_eq3=0.02750  paired_eq4=NA  controlled=inconclusive
+assess_entrapment: nominal_fdr=0.05  level=peptide  n_target=7386  n_entrapment=215  combined_eq1=0.05657  lower_bound_eq2=0.02829  sample_eq3=0.02911  paired_eq4=0.04855  controlled=control_demonstrated
+assess_entrapment: nominal_fdr=0.05  level=protein  n_target=1242  n_entrapment=45  combined_eq1=0.06993  lower_bound_eq2=0.03497  sample_eq3=0.03623  paired_eq4=NA  controlled=inconclusive

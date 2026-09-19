@@ -1,0 +1,63 @@
+04_convert_mzml: 6 run(s) selected
+04_convert_mzml: [1/6] 20141119_AlCH_1WT_20_2h_n3_1_1200 already converted, skipping.
+04_convert_mzml: [2/6] converting 20141119_AlCH_1WT_20_2h_n4_1_1212
+04_convert_mzml: 20141119_AlCH_1WT_20_2h_n4_1_1212: 58991 spectra, RAW 2760 MiB -> mzML.gz 377 MiB (ratio 0.1369)
+04_convert_mzml: deleted 20141119_AlCH_1WT_20_2h_n4_1_1212.raw
+04_convert_mzml: [3/6] fetching 20141119_AlCH_1WT_20_2h_n5_1_1224.raw
+03_fetch_raw: reusing cached file listing, delete pride_file_listing.json to refresh.
+03_fetch_raw: sample sheet has 18 runs, 47.3 GiB of RAW
+03_fetch_raw:   WT: 9 runs across 3 cultures
+03_fetch_raw:   argP_KO: 9 runs across 3 cultures
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/config/samples.tsv
+03_fetch_raw: selection is 15.8 GiB of RAW, 6 GiB free
+03_fetch_raw: RAW is deleted as it converts (04), so peak is one file plus the mzML set
+03_fetch_raw: fetching 1 file(s)
+03_fetch_raw: downloading 20141119_AlCH_1WT_20_2h_n5_1_1224.raw
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/results/raw_manifest.tsv
+04_convert_mzml: [3/6] converting 20141119_AlCH_1WT_20_2h_n5_1_1224
+04_convert_mzml: 20141119_AlCH_1WT_20_2h_n5_1_1224: 58958 spectra, RAW 2706 MiB -> mzML.gz 371 MiB (ratio 0.1373)
+04_convert_mzml: deleted 20141119_AlCH_1WT_20_2h_n5_1_1224.raw
+04_convert_mzml: [4/6] fetching 20141119_AlCH_3D8_20_2h_n3_1_1206.raw
+03_fetch_raw: reusing cached file listing, delete pride_file_listing.json to refresh.
+03_fetch_raw: sample sheet has 18 runs, 47.3 GiB of RAW
+03_fetch_raw:   WT: 9 runs across 3 cultures
+03_fetch_raw:   argP_KO: 9 runs across 3 cultures
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/config/samples.tsv
+03_fetch_raw: selection is 15.8 GiB of RAW, 5 GiB free
+03_fetch_raw: RAW is deleted as it converts (04), so peak is one file plus the mzML set
+03_fetch_raw: fetching 1 file(s)
+03_fetch_raw: downloading 20141119_AlCH_3D8_20_2h_n3_1_1206.raw
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/results/raw_manifest.tsv
+04_convert_mzml: [4/6] converting 20141119_AlCH_3D8_20_2h_n3_1_1206
+04_convert_mzml: 20141119_AlCH_3D8_20_2h_n3_1_1206: 58247 spectra, RAW 2752 MiB -> mzML.gz 377 MiB (ratio 0.1371)
+04_convert_mzml: deleted 20141119_AlCH_3D8_20_2h_n3_1_1206.raw
+04_convert_mzml: [5/6] fetching 20141119_AlCH_3D8_20_2h_n4_1_1218.raw
+03_fetch_raw: reusing cached file listing, delete pride_file_listing.json to refresh.
+03_fetch_raw: sample sheet has 18 runs, 47.3 GiB of RAW
+03_fetch_raw:   WT: 9 runs across 3 cultures
+03_fetch_raw:   argP_KO: 9 runs across 3 cultures
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/config/samples.tsv
+03_fetch_raw: selection is 15.8 GiB of RAW, 5 GiB free
+03_fetch_raw: RAW is deleted as it converts (04), so peak is one file plus the mzML set
+03_fetch_raw: fetching 1 file(s)
+03_fetch_raw: downloading 20141119_AlCH_3D8_20_2h_n4_1_1218.raw
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/results/raw_manifest.tsv
+04_convert_mzml: [5/6] converting 20141119_AlCH_3D8_20_2h_n4_1_1218
+04_convert_mzml: 20141119_AlCH_3D8_20_2h_n4_1_1218: 58929 spectra, RAW 2506 MiB -> mzML.gz 343 MiB (ratio 0.1370)
+04_convert_mzml: deleted 20141119_AlCH_3D8_20_2h_n4_1_1218.raw
+04_convert_mzml: [6/6] fetching 20141119_AlCH_3D8_20_2h_n5_1_1230.raw
+03_fetch_raw: reusing cached file listing, delete pride_file_listing.json to refresh.
+03_fetch_raw: sample sheet has 18 runs, 47.3 GiB of RAW
+03_fetch_raw:   WT: 9 runs across 3 cultures
+03_fetch_raw:   argP_KO: 9 runs across 3 cultures
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/config/samples.tsv
+03_fetch_raw: selection is 15.8 GiB of RAW, 5 GiB free
+03_fetch_raw: RAW is deleted as it converts (04), so peak is one file plus the mzML set
+03_fetch_raw: fetching 1 file(s)
+03_fetch_raw: downloading 20141119_AlCH_3D8_20_2h_n5_1_1230.raw
+03_fetch_raw: wrote /home/qasim/file/sage_lfq_proteomics_pipeline/results/raw_manifest.tsv
+04_convert_mzml: [6/6] converting 20141119_AlCH_3D8_20_2h_n5_1_1230
+04_convert_mzml: 20141119_AlCH_3D8_20_2h_n5_1_1230: 58395 spectra, RAW 2577 MiB -> mzML.gz 353 MiB (ratio 0.1372)
+04_convert_mzml: deleted 20141119_AlCH_3D8_20_2h_n5_1_1230.raw
+04_convert_mzml: done. mzML retained in /home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml
+2.2G	/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml

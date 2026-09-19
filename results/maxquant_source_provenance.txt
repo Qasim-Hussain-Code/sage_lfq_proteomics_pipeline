@@ -1,4 +1,4 @@
 source_url            https://raw.githubusercontent.com/statOmics/msqrob2data/refs/heads/main/dda/francisellaFull/peptides.txt
-downloaded_utc        2026-09-19T13:30:32Z
+downloaded_utc        2026-09-19T15:35:39Z
 sha256                1fa9b3ec30e9f3678d8ccaddda470d4117babf3f78e7e4f2b816a4ec5c335a40
 rows                  10693

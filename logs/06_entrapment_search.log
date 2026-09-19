@@ -1,3 +1,25 @@
+[2026-09-19T15:30:40Z INFO  sage] generated 23871489 fragments, 956027 peptides in 1104ms
+[2026-09-19T15:30:40Z INFO  sage] processing files 0 .. 1 
+[2026-09-19T15:30:49Z INFO  sage] - file IO:     8594 ms
+[2026-09-19T15:30:53Z INFO  sage] - search:      3576 ms (11806 spectra/s)
+[2026-09-19T15:30:53Z INFO  sage] processing files 1 .. 2 
+[2026-09-19T15:31:00Z INFO  sage] - file IO:     7608 ms
+[2026-09-19T15:31:05Z INFO  sage] - search:      4686 ms (8948 spectra/s)
+[2026-09-19T15:31:05Z INFO  sage] processing files 2 .. 3 
+[2026-09-19T15:31:14Z INFO  sage] - file IO:     9138 ms
+[2026-09-19T15:31:20Z INFO  sage] - search:      5805 ms (7275 spectra/s)
+[2026-09-19T15:31:20Z INFO  sage] processing files 3 .. 4 
+[2026-09-19T15:31:29Z INFO  sage] - file IO:     8869 ms
+[2026-09-19T15:31:35Z INFO  sage] - search:      5672 ms (7231 spectra/s)
+[2026-09-19T15:31:35Z INFO  sage] processing files 4 .. 5 
+[2026-09-19T15:31:42Z INFO  sage] - file IO:     7811 ms
+[2026-09-19T15:31:46Z INFO  sage] - search:      3420 ms (12244 spectra/s)
+[2026-09-19T15:31:46Z INFO  sage] processing files 5 .. 6 
+[2026-09-19T15:31:54Z INFO  sage] - file IO:     8172 ms
+[2026-09-19T15:31:59Z INFO  sage] - search:      4610 ms (8962 spectra/s)
+[2026-09-19T15:32:00Z INFO  sage] discovered 57723 target peptide-spectrum matches at 1% FDR
+[2026-09-19T15:32:00Z INFO  sage] discovered 6847 target peptides at 1% FDR
+[2026-09-19T15:32:00Z INFO  sage] discovered 1197 target proteins at 1% FDR
 {
   "version": "0.14.6",
   "database": {
@@ -93,3 +115,5 @@
     "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage_entrapment/results.json"
   ]
 }
+[2026-09-19T15:32:01Z INFO  sage] finished in 81s
+[2026-09-19T15:32:01Z INFO  sage] cite: "Sage: An Open-Source Tool for Fast Proteomics Searching and Quantification at Scale" https://doi.org/10.1021/acs.jproteome.3c00486

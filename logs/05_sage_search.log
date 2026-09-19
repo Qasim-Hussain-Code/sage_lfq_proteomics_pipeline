@@ -1,0 +1,132 @@
+[2026-09-19T15:29:07Z INFO  sage] generated 11825551 fragments, 472823 peptides in 629ms
+[2026-09-19T15:29:07Z INFO  sage] processing files 0 .. 1 
+[2026-09-19T15:29:15Z INFO  sage] - file IO:     8515 ms
+[2026-09-19T15:29:18Z INFO  sage] - search:      2338 ms (18055 spectra/s)
+[2026-09-19T15:29:18Z INFO  sage] processing files 1 .. 2 
+[2026-09-19T15:29:26Z INFO  sage] - file IO:     7900 ms
+[2026-09-19T15:29:28Z INFO  sage] - search:      2277 ms (18412 spectra/s)
+[2026-09-19T15:29:28Z INFO  sage] processing files 2 .. 3 
+[2026-09-19T15:29:36Z INFO  sage] - file IO:     7782 ms
+[2026-09-19T15:29:38Z INFO  sage] - search:      2077 ms (20328 spectra/s)
+[2026-09-19T15:29:38Z INFO  sage] processing files 3 .. 4 
+[2026-09-19T15:29:45Z INFO  sage] - file IO:     7433 ms
+[2026-09-19T15:29:48Z INFO  sage] - search:      2386 ms (17186 spectra/s)
+[2026-09-19T15:29:48Z INFO  sage] processing files 4 .. 5 
+[2026-09-19T15:29:55Z INFO  sage] - file IO:     7316 ms
+[2026-09-19T15:29:57Z INFO  sage] - search:      1856 ms (22556 spectra/s)
+[2026-09-19T15:29:57Z INFO  sage] processing files 5 .. 6 
+[2026-09-19T15:30:04Z INFO  sage] - file IO:     7523 ms
+[2026-09-19T15:30:07Z INFO  sage] - search:      2918 ms (14157 spectra/s)
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligning file #3: y = 0.9489x + -0.0031
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligning file #2: y = 0.9968x + 0.0051
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligning file #0: y = 1.0498x + -0.0020
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligning file #4: y = 1.0027x + -0.0003
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligning file #1: y = 1.0003x + 0.0002
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligning file #5: y = 0.9989x + 0.0001
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_alignment] aligned retention times across 6 files
+[2026-09-19T15:30:08Z INFO  sage_core::ml::retention_model] - fit retention time model, rsq = 0.8655168295309081
+[2026-09-19T15:30:09Z INFO  sage_core::ml::mobility_model] - fit mobility model, rsq = NaN, mse = 0
+[2026-09-19T15:30:10Z INFO  sage_core::lfq] tracing MS1 features
+[2026-09-19T15:30:13Z INFO  sage_core::lfq] integrating MS1 features
+[2026-09-19T15:30:13Z INFO  sage] discovered 6842 target MS1 peaks at 5% FDR
+[2026-09-19T15:30:13Z INFO  sage] discovered 59735 target peptide-spectrum matches at 1% FDR
+[2026-09-19T15:30:13Z INFO  sage] discovered 7166 target peptides at 1% FDR
+[2026-09-19T15:30:13Z INFO  sage] discovered 1233 target proteins at 1% FDR
+{
+  "version": "0.14.6",
+  "database": {
+    "bucket_size": 8192,
+    "enzyme": {
+      "missed_cleavages": 2,
+      "min_len": 7,
+      "max_len": 50,
+      "cleave_at": "KR",
+      "restrict": "P",
+      "c_terminal": true,
+      "semi_enzymatic": false
+    },
+    "fragment_min_mz": 150.0,
+    "fragment_max_mz": 2000.0,
+    "peptide_min_mass": 500.0,
+    "peptide_max_mass": 5000.0,
+    "ion_kinds": [
+      "b",
+      "y"
+    ],
+    "min_ion_index": 2,
+    "static_mods": {
+      "C": 57.02146
+    },
+    "variable_mods": {
+      "[": [
+        42.01057
+      ],
+      "M": [
+        15.99491
+      ]
+    },
+    "max_variable_mods": 2,
+    "decoy_tag": "rev_",
+    "generate_decoys": true,
+    "fasta": "/home/qasim/file/sage_lfq_proteomics_pipeline/data/fasta/search_database.fasta"
+  },
+  "quant": {
+    "tmt": null,
+    "tmt_settings": {
+      "level": 3,
+      "sn": false
+    },
+    "lfq": true,
+    "lfq_settings": {
+      "peak_scoring": "Hybrid",
+      "integration": "Sum",
+      "spectral_angle": 0.7,
+      "ppm_tolerance": 5.0,
+      "combine_charge_states": true
+    }
+  },
+  "precursor_tol": {
+    "ppm": [
+      -20.0,
+      20.0
+    ]
+  },
+  "fragment_tol": {
+    "ppm": [
+      -20.0,
+      20.0
+    ]
+  },
+  "precursor_charge": [
+    2,
+    4
+  ],
+  "isotope_errors": [
+    -1,
+    3
+  ],
+  "deisotope": true,
+  "chimera": false,
+  "wide_window": false,
+  "min_peaks": 15,
+  "max_peaks": 150,
+  "max_fragment_charge": 2,
+  "min_matched_peaks": 4,
+  "report_psms": 1,
+  "predict_rt": true,
+  "mzml_paths": [
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n3_1_1200.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n4_1_1212.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n5_1_1224.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n3_1_1206.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n4_1_1218.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n5_1_1230.mzML.gz"
+  ],
+  "output_paths": [
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage/results.sage.tsv",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage/lfq.tsv",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage/results.json"
+  ]
+}
+[2026-09-19T15:30:13Z INFO  sage] finished in 67s
+[2026-09-19T15:30:13Z INFO  sage] cite: "Sage: An Open-Source Tool for Fast Proteomics Searching and Quantification at Scale" https://doi.org/10.1021/acs.jproteome.3c00486

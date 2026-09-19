@@ -68,6 +68,10 @@
   "output_directory": "/home/qasim/file/sage_lfq_proteomics_pipeline/results/sage_entrapment",
   "mzml_paths": [
     "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n3_1_1200.mzML.gz",
-    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n4_1_1212.mzML.gz"
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n4_1_1212.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_1WT_20_2h_n5_1_1224.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n3_1_1206.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n4_1_1218.mzML.gz",
+    "/home/qasim/file/sage_lfq_proteomics_pipeline/data/mzml/20141119_AlCH_3D8_20_2h_n5_1_1230.mzML.gz"
   ]
 }
