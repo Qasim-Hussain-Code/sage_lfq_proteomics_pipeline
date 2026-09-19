@@ -48,6 +48,8 @@ source "${REPO_ROOT}/project.conf"
 [[ -n "${PROTEOME}" ]] || PROTEOME="${UNIPROT_PROTEOME}"
 [[ "${ENTRAPMENT_MODE:-shuffled}" == "foreign" ]] && FETCH_FOREIGN="true"
 
+# shellcheck disable=SC2153  # DATA_DIR comes from the generated
+# project.conf sourced above, which shellcheck cannot follow.
 FASTA_DIR="${DATA_DIR}/fasta"
 mkdir -p "${FASTA_DIR}" "${RESULTS_DIR}"
 TARGET_FASTA="${FASTA_DIR}/${PROTEOME}_target.fasta"

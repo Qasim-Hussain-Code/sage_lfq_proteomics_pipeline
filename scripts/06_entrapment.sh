@@ -55,6 +55,8 @@ source "${REPO_ROOT}/scripts/lib/common.sh"
 
 MODE="${MODE:-${ENTRAPMENT_MODE:-shuffled}}"
 RATIO="${RATIO:-${ENTRAPMENT_RATIO:-1}}"
+# shellcheck disable=SC2153  # DATA_DIR comes from the generated
+# project.conf sourced above, which shellcheck cannot follow.
 FASTA_DIR="${DATA_DIR}/fasta"
 TARGET_FASTA="${FASTA_DIR}/search_database.fasta"
 ENT_ONLY="${FASTA_DIR}/entrapment_only.fasta"
