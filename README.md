@@ -21,12 +21,19 @@ proteins is -0.363 from MaxQuant and -0.372 from Sage, two independent
 searches of the same spectra against two different databases landing within
 0.01 of each other.
 
-Where the two engines diverge is in what they call significant, and the
-divergence is mostly power rather than disagreement. Over the 922 protein
-groups both could test, Spearman correlation of the test statistics is 0.74
-and 42 of each engine's top 100 by p-value are shared. Goeminne and colleagues
-reported 52 of 100 shared when they reanalysed this same dataset against the
-original authors' numbers, so 42 is the same order of disagreement.
+Where the two engines diverge is in what they call significant. Over the 922
+protein groups both could test, Spearman correlation of the test statistics is
+0.74 and 42 of each engine's top 100 by p-value are shared. Goeminne and
+colleagues reported 52 of 100 shared when they reanalysed this same dataset
+against the original authors' numbers, so 42 is the same order of
+disagreement.
+
+The largest single difference between the two is not scoring and not FDR. On
+identical runs Sage's quantification matrix is 0.4 percent missing and
+MaxQuant's is 50.9 percent, because Sage's LFQ traces MS1 peaks across
+retention-time-aligned runs and the authors ran MaxQuant with
+match-between-runs switched off. That one choice drives the significant
+counts, the unfittable proteins and the filter sensitivity in both arms.
 
 The model you fit matters more than the engine you use. On all eighteen runs,
 a random intercept for the biological culture calls 202 of 1,180 protein
