@@ -39,8 +39,10 @@ section rather than being quietly absorbed.
 
 `generate_decoys: true` and `decoy_tag: "rev_"`. Sage reverses tryptic
 peptides rather than whole proteins, which is what makes the picked-peptide
-approach to FDR available (Savitski et al., PMID 36166314 is the reference
-Sage's own documentation gives). The distinction matters: reversing a whole
+approach to FDR available. The reference Sage's own documentation links for
+that is Lin A, Short T, Noble WS, Keich U, "Improving Peptide-Level Mass
+Spectrometry Analysis via Double Competition", J Proteome Res 2022,
+21(10):2412-2420, PMID 36166314. The distinction matters: reversing a whole
 protein scrambles the peptide boundaries, so a decoy peptide no longer has a
 one-to-one target partner and the picked approach, which competes each target
 peptide against its own reverse, has nothing to pair. Peptide-level reversal
