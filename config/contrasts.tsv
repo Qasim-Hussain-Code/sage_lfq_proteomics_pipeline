@@ -1,0 +1,3 @@
+# Contrasts tested by scripts/differential.R.
+# name	contrast	description
+genotype_argPKO_vs_WT	genotypeargP_KO = 0	argP transporter deletion against wild type, 20 uM arginine, 2 h

@@ -3,6 +3,9 @@
 # data/ is ever tracked. Committing one of these to git is close to
 # unrecoverable, which is why this file is the first commit in the repository.
 data/
+# The directory is ignored but its README explains the layout and the disk
+# arithmetic, so it has to be tracked.
+!data/README.md
 *.raw
 *.RAW
 *.mzML
