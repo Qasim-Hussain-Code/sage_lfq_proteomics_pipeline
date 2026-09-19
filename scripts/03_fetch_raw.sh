@@ -123,7 +123,9 @@ echo "03_fetch_raw: wrote ${SAMPLES}"
 # Refuse before downloading anything if the selection cannot fit. 00_configure
 # projected this from a mean file size; here the exact bytes are known, so the
 # check is arithmetic rather than an estimate.
-NEEDED_GIB="$(awk -F'\t' -v sub="${SUBSET}" 'NR>1 && (sub!="true" || $8==1) {s+=$11} END {printf "%.1f", s/1073741824}' "${SAMPLES}")"
+# The awk variable is named want_subset, not sub: sub is an awk built-in and
+# "awk -v sub=..." is rejected outright with a keyword clash.
+NEEDED_GIB="$(awk -F'\t' -v want_subset="${SUBSET}" 'NR>1 && (want_subset!="true" || $8==1) {s+=$11} END {printf "%.1f", s/1073741824}' "${SAMPLES}")"
 FREE_GIB="$(df -BG --output=avail "${DATA_DIR}" | tail -1 | tr -dc '0-9')"
 echo "03_fetch_raw: selection is ${NEEDED_GIB} GiB of RAW, ${FREE_GIB} GiB free"
 echo "03_fetch_raw: RAW is deleted as it converts (04), so peak is one file plus the mzML set"
