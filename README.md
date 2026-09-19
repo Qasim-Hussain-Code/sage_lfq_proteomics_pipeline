@@ -23,8 +23,8 @@ the tested set (Fisher odds ratio 7.05, p = 5.7e-11). That reproduces the
 prediction in the original paper.
 
 The pipeline is built to survive a small disk. Eighteen RAW files are 47.3 GiB
-and this machine had 8.3 GiB free, so `00_configure.sh` projected 14.1 GiB peak
-and refused to start. What actually ran here, and what did not, is set out
+and this machine never had more than 9 GiB free, so `00_configure.sh` projected
+14.1 GiB peak and refused to start. What actually ran here, and what did not, is set out
 under limitations. Nothing in this README is a number I did not measure.
 
 ## Background, for someone who knows RNA-seq
@@ -349,9 +349,11 @@ Measured cost per stage is in `logs/stage_metrics.tsv`, written by
 
 ## Limitations
 
-**The full eighteen-run Sage search did not run on this machine.** It has
-8.3 GiB free against a 14.1 GiB projection, and the pipeline refused, which is
-the behaviour it was built for. What that means for this README is stated
+**The full eighteen-run Sage search did not run on this machine.** The
+eighteen-run projection is 14.1 GiB peak and free disk never exceeded 9 GiB
+during this session, so `00_configure.sh` refused, which is the behaviour it
+was built for. The projection and the refusal are recorded in
+`logs/00_configure_projection.txt`. What that means for this README is stated
 directly: the differential abundance and biology above come from the authors'
 own MaxQuant quantification of these spectra, put through this pipeline's
 statistics. The Sage side is reported separately below and is smaller.
