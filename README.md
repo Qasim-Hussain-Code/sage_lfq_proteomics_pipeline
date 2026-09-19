@@ -287,11 +287,36 @@ shared.**
 | Top 100 by p-value, shared | 42 |
 
 Both arms here are the six-run design, so both are underpowered and the
-significant counts are small. The asymmetry in them is worth noting: on
-identical runs Sage produced 21 significant proteins and no unfittable ones,
-while the MaxQuant table produced 3 significant and 120 that could not be
-fitted at all. Sage quantified fewer peptides but distributed them across runs
-more completely, and completeness is what the model needs.
+significant counts are small. The asymmetry between them is the most
+interesting thing in this comparison, and it has one cause.
+
+**On identical runs, Sage's quantification matrix is 0.4 percent missing and
+MaxQuant's is 50.9 percent missing.**
+
+That is not a rounding difference. It follows from a deliberate choice on each
+side. The authors ran MaxQuant with `Match between runs   False`, recorded in
+their `parameters.txt`, so a peptide is quantified in a run only if it was
+identified by MS2 in that run. Sage's label-free quantification aligns
+retention times across runs and integrates MS1 peaks for a precursor wherever
+the aligned window says it should be, whether or not that run produced an MS2
+identification. Turning LFQ on is what forces `predict_rt` to true, and
+cross-run MS1 tracing is the whole point of it.
+
+The downstream consequences are large. On the same six runs Sage yields 21
+significant proteins and zero unfittable ones; the MaxQuant table yields 3
+significant and 120 proteins that could not be fitted at all. Sage's culture
+filter removes almost nothing, 6,899 peptides of 6,900, so its sensitivity
+sweep is flat at 25 significant proteins from a two-culture threshold through
+a five-culture one. The MaxQuant arm loses 28 percent of its peptides at the
+same first step.
+
+None of that makes Sage right. Filling a cell by MS1 tracing asserts that the
+peak in the aligned window is the same precursor, and where that assertion is
+wrong the value is confidently wrong rather than honestly absent. The authors
+switched match-between-runs off, which is a defensible conservative choice.
+What the comparison shows is that the largest difference between these two
+results is not scoring or FDR at all. It is how each tool decides whether a
+peptide was present in a run it was not identified in.
 
 I cannot tell you which engine is right from this data. Nothing here is a
 ground truth experiment: there is no known fold change and no spiked standard,
@@ -482,6 +507,14 @@ were written, it cannot see a ribosome-associated protein that is not described
 as one, and it has no notion of a pathway. The background is correct, the
 proteins that could not be fitted are excluded from it, and the test is a
 Fisher exact test, but the gene set is a string match.
+
+**The missingness comparison is not like for like.** Sage was run with LFQ
+on, which does cross-run MS1 tracing; the authors ran MaxQuant with
+match-between-runs off. The 0.4 against 50.9 percent gap is therefore a
+comparison of two configurations as much as of two tools, and MaxQuant with
+match-between-runs enabled would sit somewhere between. I did not rerun
+MaxQuant, because the point of this comparison was to test the authors'
+published result as published.
 
 **No ground truth.** There is no known fold change in this experiment and no
 spiked standard, so where Sage and MaxQuant disagree, this data cannot say
