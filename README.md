@@ -228,6 +228,8 @@ independent estimates of the effect agree to within 0.01 on the log2 scale.**
 
 ![Ribosomal proteins, MaxQuant arm](figures/maxquant_ribosomal_logfc.png)
 
+![Ribosomal proteins, Sage arm](figures/sage_ribosomal_logfc.png)
+
 | | MaxQuant, 18 runs | Sage, 6 runs |
 |---|---|---|
 | Protein groups tested | 1,115 | 1,175 |
@@ -269,6 +271,8 @@ test statistics is 0.74, and 42 of each engine's top 100 by p-value are
 shared.**
 
 ![Sage against MaxQuant](figures/engine_logfc_scatter.png)
+
+![Volcano, Sage arm](figures/sage_volcano_mixed.png)
 
 | | |
 |---|---|
@@ -349,11 +353,16 @@ The two-culture threshold is arbitrary, so here is how much it matters.
 
 The count moves between 199 and 215 across the whole range. The conclusion
 does not depend on the choice, and reporting that is cheaper than defending
-the number.
+the number. The Sage arm's own sweep is in
+`results/sage_threshold_sensitivity.tsv` and plotted below.
+
+![Threshold sensitivity, Sage arm](figures/sage_threshold_sensitivity.png)
 
 ### Normalisation
 
 ![Normalisation densities](figures/maxquant_normalisation_densities.png)
+
+![Normalisation densities, Sage arm](figures/sage_normalisation_densities.png)
 
 Median of ratios on the log2 scale, with per-run offsets from -0.427 to 0.312
 in the MaxQuant arm. The alternative was centring each run on its own median,
