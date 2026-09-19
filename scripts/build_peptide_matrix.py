@@ -65,6 +65,39 @@ def build_sage(lfq_path, samples):
     return rows, runs
 
 
+def annotation_from_maxquant(pep_path):
+    """MaxQuant carries a "Protein names" column parallel to "Proteins"."""
+    ann = {}
+    with open(pep_path) as fh:
+        for r in csv.DictReader(fh, delimiter="\t"):
+            accs = r.get("Proteins", "").split(";")
+            names = r.get("Protein names", "").split(";")
+            for i, a in enumerate(accs):
+                if a and a not in ann:
+                    ann[a] = names[i] if i < len(names) else (names[0] if names else "")
+    return ann
+
+
+def annotation_from_fasta(path):
+    """UniProt headers: >db|ACC|ENTRY Description OS=... so cut at OS=."""
+    ann = {}
+    with open(path) as fh:
+        for line in fh:
+            if not line.startswith(">"):
+                continue
+            hdr = line[1:].rstrip()
+            acc = hdr.split()[0]
+            desc = hdr[len(acc):].strip()
+            desc = re.split(r"\s+(?:OS|OX|GN|PE|SV)=", desc)[0].strip()
+            ann[acc] = desc
+            # Sage reports the whole header token, so also key on the bare
+            # UniProt accession between the pipes.
+            parts = acc.split("|")
+            if len(parts) >= 2 and parts[1] not in ann:
+                ann[parts[1]] = desc
+    return ann
+
+
 def build_maxquant(pep_path, samples):
     with open(pep_path) as fh:
         rd = csv.DictReader(fh, delimiter="\t")
@@ -113,6 +146,8 @@ def main():
     ap.add_argument("--input", required=True)
     ap.add_argument("--samples", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--annotation", help="optional protein -> description TSV")
+    ap.add_argument("--fasta", help="FASTA to take descriptions from (sage source)")
     args = ap.parse_args()
 
     samples = read_samples(args.samples)
@@ -135,6 +170,23 @@ def main():
             n_written += 1
     print(f"build_peptide_matrix: {n_written} peptides x {len(runs)} runs -> {args.output}",
           file=sys.stderr)
+
+    if args.annotation:
+        if args.source == "maxquant":
+            ann = annotation_from_maxquant(args.input)
+        elif args.fasta:
+            ann = annotation_from_fasta(args.fasta)
+        else:
+            ann = {}
+            print("build_peptide_matrix: no --fasta given, annotation will be empty",
+                  file=sys.stderr)
+        with open(args.annotation, "w", newline="") as fh:
+            w = csv.writer(fh, delimiter="\t", lineterminator="\n")
+            w.writerow(["protein", "description"])
+            for a in sorted(ann):
+                w.writerow([a, ann[a]])
+        print(f"build_peptide_matrix: {len(ann)} annotations -> {args.annotation}",
+              file=sys.stderr)
 
 
 if __name__ == "__main__":

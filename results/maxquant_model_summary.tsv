@@ -1,0 +1,9 @@
+metric	value
+proteins_tested	1180
+sig_mixed_5pct	202
+sig_naive_5pct	365
+fitError_mixed	50
+fitError_naive	43
+median_se_ratio_naive_over_mixed	0.7314
+median_df_mixed	14.66
+median_df_naive	17.13

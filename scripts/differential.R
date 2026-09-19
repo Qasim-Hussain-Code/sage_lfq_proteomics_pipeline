@@ -83,10 +83,20 @@ coldata <- data.frame(
 # pooling two unrelated cultures.
 coldata$culture <- factor(paste(coldata$genotype, coldata$biorep, sep = "_"))
 
-qf <- readQFeatures(assayData = pep, colData = coldata, quantCols = quant_cols,
-                    name = "peptide", fnames = NULL)
-rowData(qf[["peptide"]])$peptide_id <- pep$peptide
-rowData(qf[["peptide"]])$proteins   <- pep$proteins
+# The SummarizedExperiment is assembled by hand rather than through
+# readQFeatures. QFeatures 1.20.0 changed that function's contract: passing a
+# colData now requires a "quantCols" column inside the colData itself, and
+# the older positional form fails with a message that does not say so.
+# Constructing the object directly is a few more lines and does not move
+# between releases.
+int_mat <- as.matrix(pep[, quant_cols, drop = FALSE])
+mode(int_mat) <- "numeric"
+rownames(int_mat) <- make.unique(as.character(pep$peptide))
+se <- SummarizedExperiment(
+  assays  = list(assay = int_mat),
+  rowData = DataFrame(peptide_id = pep$peptide, proteins = pep$proteins),
+  colData = DataFrame(coldata))
+qf <- QFeatures(list(peptide = se), colData = DataFrame(coldata))
 
 waterfall <- data.frame(step = "imported", features = nrow(qf[["peptide"]]))
 add_step <- function(w, label, n) rbind(w, data.frame(step = label, features = n))
