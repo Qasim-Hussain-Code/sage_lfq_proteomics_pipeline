@@ -223,6 +223,10 @@ write.table(dens, file.path(outdir, paste0(prefix, "_normalisation_densities.tsv
 # clustering. The assumption they take on is that values are missing at
 # random given the observed data, which for this assay is close to known to
 # be false.
+# Snapshot before aggregation. Once a protein assay is attached, indexing
+# the whole object with a peptide-length logical vector is out of bounds on
+# that assay, which is what broke the first version of the sweep below.
+qf_pep <- qf
 qf <- aggregateFeatures(qf, i = "norm", fcol = "proteins",
                         name = "protein", fun = robustSummary, na.rm = TRUE)
 n_prot <- nrow(qf[["protein"]])
@@ -274,8 +278,40 @@ results_for <- function(qf, formula, label) {
   list(qf = qf2, res = as.data.frame(res))
 }
 
-mixed <- results_for(qf, ~ genotype + (1 | culture), "mixed")
-naive <- results_for(qf, ~ genotype, "naive")
+# Is the random intercept identifiable at all? It needs at least one culture
+# measured more than once. In --subset mode there is a single injection per
+# culture, so (1 | culture) has one observation per level, the variance
+# component has nothing to estimate from, and every fit is singular.
+#
+# The distinction matters for how the second model should be read. With
+# eighteen runs, three injections of each culture, ~ genotype is the naive
+# model and it is wrong: it counts injections as replicates. With six runs,
+# one injection per culture, ~ genotype is the correct model, because then
+# the runs really are six independent cultures. Same formula, opposite
+# status, decided by the design and not by preference.
+runs_per_culture <- table(coldata$culture)
+mixed_identifiable <- any(runs_per_culture > 1)
+msg("runs per culture: ", paste(sprintf("%s=%d", names(runs_per_culture),
+    as.integer(runs_per_culture)), collapse = ", "))
+
+if (mixed_identifiable) {
+  msg("fitting ~ genotype + (1 | culture) and, for contrast, the naive ~ genotype")
+  mixed <- results_for(qf, ~ genotype + (1 | culture), "mixed")
+  naive <- results_for(qf, ~ genotype, "naive")
+  second_model_role <- "naive, pseudo-replicated"
+} else {
+  msg("every culture contributes one run, so (1 | culture) is not identifiable.")
+  msg("fitting ~ genotype only. Here that is the correct model, not the naive one.")
+  mixed <- NULL
+  naive <- results_for(qf, ~ genotype, "naive")
+  second_model_role <- "correct: one run per culture, no technical replication"
+}
+writeLines(c(paste0("mixed_model_identifiable\t", mixed_identifiable),
+             paste0("second_model_role\t", second_model_role),
+             paste0("runs_per_culture\t",
+                    paste(sprintf("%s=%d", names(runs_per_culture),
+                                  as.integer(runs_per_culture)), collapse = ";"))),
+           file.path(outdir, paste0(prefix, "_design.tsv")))
 
 summarise_fit <- function(r, label) {
   if (is.null(r)) return(NULL)
@@ -302,6 +338,30 @@ for (nm in c("mixed", "naive")) {
   write.table(d[order(d$pval), ],
               file.path(outdir, paste0(prefix, "_protein_results_", nm, ".tsv")),
               sep = "\t", row.names = FALSE, quote = FALSE)
+}
+# Stages 09 and 10 read the "_mixed" file as the primary result. When the
+# mixed model was not identifiable, the single fitted model is the primary
+# result, so it is written under that name as well. _design.tsv records
+# which model actually produced it, so the file name cannot mislead on its
+# own.
+if (is.null(mixed_d) && !is.null(naive_d)) {
+  write.table(naive_d[order(naive_d$pval), ],
+              file.path(outdir, paste0(prefix, "_protein_results_mixed.tsv")),
+              sep = "\t", row.names = FALSE, quote = FALSE)
+}
+
+if (is.null(mixed_d) && !is.null(naive_d)) {
+  summ <- data.frame(
+    metric = c("proteins_tested", "sig_single_model_5pct", "fitError_single_model",
+               "median_df_single_model", "mixed_model_identifiable"),
+    value = c(nrow(naive_d),
+              sum(naive_d$adjPval_BH < 0.05, na.rm = TRUE),
+              sum(naive_d$fit_status == "fitError", na.rm = TRUE),
+              round(median(naive_d$df, na.rm = TRUE), 2),
+              FALSE))
+  write.table(summ, file.path(outdir, paste0(prefix, "_model_summary.tsv")),
+              sep = "\t", row.names = FALSE, quote = FALSE)
+  print(summ)
 }
 
 if (!is.null(mixed_d) && !is.null(naive_d)) {
@@ -340,20 +400,25 @@ if (!is.null(mixed_d) && !is.null(naive_d)) {
 # instead of defending the particular number.
 if (run_sensitivity) {
   msg("sensitivity sweep over --min-cultures")
+  nc_all <- count_cultures(assay(qf_pep[["norm"]]), cult)
   sens <- do.call(rbind, lapply(2:5, function(k) {
-    nc <- count_cultures(assay(qf[["log2"]]), cult)
-    sub <- qf[nc >= k, , ]
+    sub <- tryCatch(qf_pep[nc_all >= k, , ], error = function(e) NULL)
+    if (is.null(sub)) return(NULL)
     sub <- tryCatch(aggregateFeatures(sub, i = "norm", fcol = "proteins",
                                       name = "protein_s", fun = robustSummary, na.rm = TRUE),
                     error = function(e) NULL)
     if (is.null(sub)) return(NULL)
-    sub <- tryCatch(msqrob(sub, i = "protein_s", formula = ~ genotype + (1 | culture),
+    fml <- if (mixed_identifiable) ~ genotype + (1 | culture) else ~ genotype
+    sub <- tryCatch(msqrob(sub, i = "protein_s", formula = fml,
                            overwrite = TRUE), error = function(e) NULL)
     if (is.null(sub)) return(NULL)
     L <- makeContrast(paste0(contrast_name, " = 0"), parameterNames = contrast_name)
-    sub <- hypothesisTest(sub, i = "protein_s", contrast = L, overwrite = TRUE)
+    sub <- tryCatch(hypothesisTest(sub, i = "protein_s", contrast = L, overwrite = TRUE),
+                    error = function(e) NULL)
+    if (is.null(sub)) return(NULL)
     d <- as.data.frame(rowData(sub[["protein_s"]])[[contrast_name]])
-    data.frame(min_cultures = k, peptides = nrow(sub[["norm"]]),
+    data.frame(min_cultures = k,
+               peptides = sum(nc_all >= k),
                proteins = nrow(d),
                significant_5pct = sum(p.adjust(d$pval, "BH") < 0.05, na.rm = TRUE))
   }))
