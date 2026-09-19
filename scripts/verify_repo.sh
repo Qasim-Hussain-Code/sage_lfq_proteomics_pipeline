@@ -30,14 +30,19 @@ for s in run_all.sh scripts/[0-9]*.sh; do
     else printf '  FAIL %s\n' "$s"; fail=1; fi
 done
 
+# This script is excluded from its own scans: it necessarily contains the
+# banned phrase list and the dash characters it is searching for, and
+# counting those would make a clean repository report as dirty.
+SCAN=('*.md' '*.sh' '*.R' '*.py' '*.json' '*.tsv' ':(exclude)scripts/verify_repo.sh')
+
 note "3. em dashes and emojis in tracked text"
 # U+2014 em dash, U+2013 en dash, and the common emoji blocks.
 # git grep exits 1 when it finds nothing, which under pipefail would abort
 # this script precisely when the repository is clean. Hence "|| true".
-emd=$( { git grep -In $'—' -- '*.md' '*.sh' '*.R' '*.py' '*.json' '*.tsv' 2>/dev/null || true; } | wc -l)
-end=$( { git grep -In $'–' -- '*.md' '*.sh' '*.R' '*.py' '*.json' '*.tsv' 2>/dev/null || true; } | wc -l)
+emd=$( { git grep -In $'\u2014' -- "${SCAN[@]}" 2>/dev/null || true; } | wc -l)
+end=$( { git grep -In $'\u2013' -- "${SCAN[@]}" 2>/dev/null || true; } | wc -l)
 emo=$( { git grep -InP '[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{FE0F}]' \
-        -- '*.md' '*.sh' '*.R' '*.py' 2>/dev/null || true; } | wc -l)
+        -- "${SCAN[@]}" 2>/dev/null || true; } | wc -l)
 echo "  em dashes: ${emd}"
 echo "  en dashes: ${end}"
 echo "  emoji:     ${emo}"
@@ -50,7 +55,7 @@ banned=("it is worth noting" "it is important to note" "in today's rapidly evolv
         "not only" "leverage" "leverages" "leveraging")
 hits=0
 for b in "${banned[@]}"; do
-    n=$( { git grep -Iiln -- "${b}" -- '*.md' '*.sh' '*.R' '*.py' 2>/dev/null || true; } | wc -l)
+    n=$( { git grep -Iiln -- "${b}" -- "${SCAN[@]}" 2>/dev/null || true; } | wc -l)
     [[ "${n}" -gt 0 ]] && { printf '  HIT  "%s" in %s file(s)\n' "${b}" "${n}"; hits=$((hits+1)); }
 done
 [[ "${hits}" -eq 0 ]] && echo "  none found"
