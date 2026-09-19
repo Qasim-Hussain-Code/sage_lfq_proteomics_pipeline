@@ -20,6 +20,8 @@ Queries the PRIDE API, writes config/samples.tsv, and downloads RAW files.
 Options:
   --list-only     write the sample sheet and the manifest, download nothing
   --limit <N>     fetch only the first N runs of the selection (validation runs)
+  --only <run>    fetch exactly one run by its run name (used by 04 when
+                  streaming conversion, so only one RAW is ever on disk)
   --subset        one technical replicate per culture (6 runs, not 18)
   --force         re-download files that are already present and correctly sized
   --help          show this message
@@ -31,11 +33,12 @@ sha256 in results/raw_manifest.tsv so later runs can detect a changed file.
 USAGE
 }
 
-LIST_ONLY="false"; LIMIT=""; SUBSET_FLAG=""; FORCE="false"
+LIST_ONLY="false"; LIMIT=""; SUBSET_FLAG=""; FORCE="false"; ONLY=""
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --list-only) LIST_ONLY="true"; shift ;;
         --limit)     LIMIT="$2"; shift 2 ;;
+        --only)      ONLY="$2"; shift 2 ;;
         --subset)    SUBSET_FLAG="true"; shift ;;
         --force)     FORCE="true"; shift ;;
         --help|-h)   usage; exit 0 ;;
@@ -128,7 +131,10 @@ echo "03_fetch_raw: RAW is deleted as it converts (04), so peak is one file plus
 # Subset selects which runs to fetch; it does not rewrite the sample sheet.
 # Keeping technical replicate 1 of each culture is arbitrary. The first
 # injection is as defensible as any and it is deterministic.
-if [[ "${SUBSET}" == "true" ]]; then
+if [[ -n "${ONLY}" ]]; then
+    mapfile -t LINES < <(awk -F'\t' -v r="${ONLY}" 'NR>1 && $1==r' "${SAMPLES}")
+    [[ "${#LINES[@]}" -gt 0 ]] || { echo "03_fetch_raw: no run named '${ONLY}' in the sample sheet" >&2; exit 1; }
+elif [[ "${SUBSET}" == "true" ]]; then
     mapfile -t LINES < <(awk -F'\t' 'NR>1 && $8==1' "${SAMPLES}")
 else
     mapfile -t LINES < <(tail -n +2 "${SAMPLES}")
@@ -136,8 +142,11 @@ fi
 [[ -n "${LIMIT}" ]] && LINES=("${LINES[@]:0:${LIMIT}}")
 echo "03_fetch_raw: fetching ${#LINES[@]} file(s)"
 
-: > "${MANIFEST}.tmp"
-printf 'run\traw_file\texpected_bytes\tobserved_bytes\tsha256\tstatus\n' > "${MANIFEST}.tmp"
+if [[ -n "${ONLY}" && -s "${MANIFEST}" ]]; then
+    cp "${MANIFEST}" "${MANIFEST}.tmp"
+else
+    printf 'run\traw_file\texpected_bytes\tobserved_bytes\tsha256\tstatus\n' > "${MANIFEST}.tmp"
+fi
 
 for line in "${LINES[@]}"; do
     IFS=$'\t' read -r run raw_file _ _ _ _ _ _ _ _ size_bytes url <<< "${line}"
