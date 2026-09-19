@@ -1,0 +1,7 @@
+nominal_fdr	level	n_target	n_entrapment	combined_eq1	lower_bound_eq2	sample_eq3	paired_eq4	controlled
+0.01	psm	10508	70	0.01324	0.00662	0.00666	NA	inconclusive
+0.01	peptide	4940	44	0.01766	0.00883	0.00891	0.01565	inconclusive
+0.01	protein	1013	8	0.01567	0.00784	0.00790	NA	inconclusive
+0.05	psm	11350	332	0.05684	0.02842	0.02925	NA	inconclusive
+0.05	peptide	5345	182	0.06586	0.03293	0.03405	0.05971	inconclusive
+0.05	protein	1072	55	0.09760	0.04880	0.05131	NA	inconclusive

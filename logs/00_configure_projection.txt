@@ -1,0 +1,19 @@
+# ---- 2026-09-19T13:55:05Z ----
+Machine and projection
+  threads available           16
+  RAM available               6 GiB
+  disk free on data volume    3 GiB
+  dataset                     francisella (subset=false)
+  runs to process             18
+  mean RAW size               2.63 GiB
+  projected retained mzML.gz  9.5 GiB
+  projected peak disk         14.1 GiB (mzML + one RAW + 2 GiB headroom)
+
+00_configure: REFUSING to configure a run that cannot finish.
+  projected peak disk 14.1 GiB exceeds free disk 3 GiB
+  shortfall           11.1 GiB
+
+  Try --subset, which keeps one technical replicate per culture
+  (three wild type, three mutant) and needs roughly
+  7.8 GiB peak instead.
+  That drops the technical replication and therefore the mixed model.

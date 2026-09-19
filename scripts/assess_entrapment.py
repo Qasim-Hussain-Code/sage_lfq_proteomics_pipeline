@@ -38,8 +38,12 @@ theirs, taken from the preprint text (bioRxiv 2024.06.01.596967v2).
                      N_{E>T>=s} : discovered entrapment peptides whose paired
                                   target scored lower but was also discovered
 
-The headline number is (4) at the peptide level, with (1) alongside it. If
-the assessed FDP exceeds nominal, that is the result and it leads the report.
+The headline number is (4) at the peptide level, with (1) alongside it.
+Because (1) and (4) are upper bounds and (2) is a lower bound, the three
+possible conclusions are asymmetric: an upper bound at or below nominal
+demonstrates control, the lower bound above nominal demonstrates failure,
+and everything in between is inconclusive rather than a failure. See
+_verdict at the bottom of this file.
 """
 import argparse
 import csv
@@ -230,13 +234,32 @@ def _f(x):
 
 
 def _verdict(d, thr):
-    """The only estimator that can establish control is a valid upper bound."""
+    """Three outcomes, not two.
+
+    This is the distinction the Wen et al. paper exists to make, and getting
+    it wrong is the most likely way to misreport an entrapment experiment.
+
+      - An upper bound (paired, else combined) at or below the nominal rate
+        DEMONSTRATES control.
+      - The lower bound (eq 2) above the nominal rate DEMONSTRATES failure.
+      - Anything else is INCONCLUSIVE. In particular an upper bound above
+        nominal is not evidence of failure: those estimators are
+        deliberately conservative and overshoot the true FDP, which is
+        exactly why the paper calls the combined method underpowered.
+
+    An earlier version of this function returned "NOT_CONTROLLED" whenever
+    the upper bound exceeded nominal. That reads a conservative bound as a
+    positive finding and would have put a false headline on this report.
+    """
     ub = d.get("paired_eq4")
-    if ub is None:
-        ub = d.get("combined_eq1")
     if ub is None or ub != ub:
-        return "undetermined"
-    return "consistent_with_control" if ub <= thr else "NOT_CONTROLLED"
+        ub = d.get("combined_eq1")
+    lb = d.get("lower_bound_eq2")
+    if lb is not None and lb == lb and lb > thr:
+        return "NOT_CONTROLLED"
+    if ub is not None and ub == ub and ub <= thr:
+        return "control_demonstrated"
+    return "inconclusive"
 
 
 if __name__ == "__main__":
