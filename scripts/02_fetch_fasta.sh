@@ -82,30 +82,50 @@ fi
 
 N_TARGET="$(grep -c '^>' "${TARGET_FASTA}")"
 
-CRAP_FASTA="${FASTA_DIR}/crap.fasta"
+CRAP_FASTA="${FASTA_DIR}/contaminants.fasta"
+# The authors ran MaxQuant with "Include contaminants True", so their
+# identifications were competed against a contaminant set. Searching without
+# one hands Francisella proteins the spectra that actually came from keratin
+# and trypsin, which inflates the identification count and quietly corrupts
+# the comparison against their result.
+#
+# First choice is the universal contaminant library of Frankenfield et al.
+# (J Proteome Res 2022, 21(9):2104-2113), whose headers already carry a
+# "Cont_" prefix. Second choice is the GPM cRAP set. I reached for cRAP first
+# and it failed: on 2026-09-19 ftp.thegpm.org presented a certificate that
+# does not match the hostname, so curl refused the connection. Rather than
+# pass --insecure to a file that defines what counts as a contaminant, the
+# script falls through to the GitHub-hosted library and only then gives up.
+CONTAM_PRIMARY="https://raw.githubusercontent.com/HaoGroup-ProtContLib/Protein-Contaminant-Libraries-for-DDA-and-DIA-Proteomics/main/Universal%20protein%20contaminant%20FASTA/0602_Universal%20Contaminants.fasta"
+CONTAM_FALLBACK="https://ftp.thegpm.org/fasta/cRAP/crap.fasta"
+CONTAM_SOURCE="none"
+
 if [[ "${WITH_CRAP}" == "true" ]]; then
     if [[ -f "${CRAP_FASTA}" && "${FORCE}" != "true" ]]; then
-        echo "02_fetch_fasta: cRAP already present, skipping."
+        echo "02_fetch_fasta: contaminants already present, skipping."
+        CONTAM_SOURCE="$(cat "${FASTA_DIR}/.contaminant_source" 2>/dev/null || echo cached)"
     else
-        # The authors ran MaxQuant with "Include contaminants True", so their
-        # identifications were competed against a contaminant set. Searching
-        # without one would hand Francisella proteins the spectra that
-        # actually came from keratin and trypsin, which inflates the
-        # identification count and quietly corrupts the comparison.
-        echo "02_fetch_fasta: fetching cRAP contaminants"
+        echo "02_fetch_fasta: fetching contaminant library"
         TMPF="$(mktemp "${FASTA_DIR}/.dl.XXXXXX")"
         if curl --silent --show-error --fail --location --max-time 300 \
-                --output "${TMPF}" "https://ftp.thegpm.org/fasta/cRAP/crap.fasta"; then
-            # Tag contaminants so 07/08 can strip them by prefix. Sage has no
-            # notion of a contaminant, it just sees more sequences.
-            sed 's/^>/>cRAP_/' "${TMPF}" > "${CRAP_FASTA}"
+                --output "${TMPF}" "${CONTAM_PRIMARY}"; then
+            # Headers already begin with Cont_, so no retagging is needed.
+            # 07_build_matrix.sh and differential.R strip on that prefix.
+            mv "${TMPF}" "${CRAP_FASTA}"; TMPF=""
+            CONTAM_SOURCE="Frankenfield2022_universal"
+        elif curl --silent --show-error --fail --location --max-time 300 \
+                --output "${TMPF}" "${CONTAM_FALLBACK}"; then
+            sed 's/^>/>Cont_/' "${TMPF}" > "${CRAP_FASTA}"
             rm -f "${TMPF}"; TMPF=""
+            CONTAM_SOURCE="GPM_cRAP"
         else
             rm -f "${TMPF}"; TMPF=""
-            echo "02_fetch_fasta: cRAP download failed. Continuing without it." >&2
-            echo "02_fetch_fasta: rerun with network access, or pass --no-contaminants" >&2
+            echo "02_fetch_fasta: both contaminant sources failed. Continuing without." >&2
+            echo "02_fetch_fasta: the search will be missing a contaminant set, which" >&2
+            echo "02_fetch_fasta: inflates identifications. Rerun when network allows." >&2
             WITH_CRAP="false"
         fi
+        [[ "${CONTAM_SOURCE}" != "none" ]] && echo "${CONTAM_SOURCE}" > "${FASTA_DIR}/.contaminant_source"
     fi
 fi
 
@@ -151,6 +171,8 @@ fi
     echo "target_sequences        ${N_TARGET}"
     echo "contaminants_included   ${WITH_CRAP}"
     echo "contaminant_sequences   ${N_CRAP}"
+    echo "contaminant_source      ${CONTAM_SOURCE}"
+    echo "contaminant_prefix      Cont_"
     echo "search_db_sequences     ${N_SEARCH}"
     echo "target_fasta_md5        $(md5sum "${TARGET_FASTA}" | cut -d' ' -f1)"
     echo "target_fasta_sha256     $(sha256sum "${TARGET_FASTA}" | cut -d' ' -f1)"
