@@ -1,0 +1,10 @@
+# Entrapment database provenance
+mode                    shuffled
+ratio_r                 1
+seed                    20260919
+target_sequences        2100
+entrapment_sequences    2100
+combined_sequences      4200
+combined_md5            da7a784d769b669e5cf81ce07a2e961e
+combined_sha256         b873547c6677df890ffed6f02de99b8e5fffc6d9a15ca0a3b5ae5a56a375c402
+pairing_rows            158951

@@ -81,6 +81,10 @@ else
     mv "${TMPF}" "${TARGET_FASTA}"; TMPF=""
     echo "${UNIPROT_RELEASE:-unknown}" > "${FASTA_DIR}/.uniprot_release"
     echo "${UNIPROT_RELEASE_DATE:-unknown}" > "${FASTA_DIR}/.uniprot_release_date"
+    # Stamp when the bytes actually arrived. Writing this at report time
+    # instead would relabel an untouched FASTA with the date of whatever run
+    # last skipped downloading it, which is provenance that lies quietly.
+    date -u +%Y-%m-%dT%H:%M:%SZ > "${FASTA_DIR}/.downloaded_utc"
 fi
 
 N_TARGET="$(grep -c '^>' "${TARGET_FASTA}")"
@@ -168,7 +172,8 @@ fi
 {
     echo "# Search database provenance"
     echo "# Written by scripts/02_fetch_fasta.sh"
-    echo "downloaded_utc          $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    echo "downloaded_utc          $(cat "${FASTA_DIR}/.downloaded_utc" 2>/dev/null || echo unknown)"
+    echo "provenance_written_utc  $(date -u +%Y-%m-%dT%H:%M:%SZ)"
     echo "uniprot_proteome        ${PROTEOME}"
     echo "uniprot_taxid           ${UNIPROT_TAXID}"
     echo "uniprot_release         $(cat "${FASTA_DIR}/.uniprot_release" 2>/dev/null || echo unknown)"

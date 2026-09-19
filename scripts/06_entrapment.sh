@@ -99,6 +99,21 @@ N_ENT="$(grep -c '^>' "${ENT_ONLY}")"
 N_TOT="$(grep -c '^>' "${COMBINED}")"
 echo "06_entrapment: ${N_TGT} target + ${N_ENT} entrapment = ${N_TOT} sequences (mode ${MODE}, r=${RATIO})"
 
+# Record the combined database exactly, so the entrapment result can be tied
+# to the sequences that produced it and not merely to the seed.
+{
+    echo "# Entrapment database provenance"
+    echo "mode                    ${MODE}"
+    echo "ratio_r                 ${RATIO}"
+    echo "seed                    ${SEED}"
+    echo "target_sequences        ${N_TGT}"
+    echo "entrapment_sequences    ${N_ENT}"
+    echo "combined_sequences      ${N_TOT}"
+    echo "combined_md5            $(md5sum "${COMBINED}" | cut -d' ' -f1)"
+    echo "combined_sha256         $(sha256sum "${COMBINED}" | cut -d' ' -f1)"
+    echo "pairing_rows            $(($(wc -l < "${PAIRING}") - 1))"
+} > "${RESULTS_DIR}/entrapment_db_provenance.txt"
+
 [[ "${BUILD_ONLY}" == "true" ]] && { echo "06_entrapment: --build-only, stopping here."; exit 0; }
 
 if [[ -s "${OUTDIR}/results.sage.tsv" && "${FORCE}" != "true" ]]; then

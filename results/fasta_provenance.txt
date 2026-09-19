@@ -1,6 +1,7 @@
 # Search database provenance
 # Written by scripts/02_fetch_fasta.sh
-downloaded_utc          2026-09-19T13:16:55Z
+downloaded_utc          2026-09-19T13:04:11Z
+provenance_written_utc  2026-09-19T15:45:38Z
 uniprot_proteome        UP000000762
 uniprot_taxid           401614
 uniprot_release         2026_03
