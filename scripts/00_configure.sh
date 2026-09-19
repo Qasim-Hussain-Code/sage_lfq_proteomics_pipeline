@@ -118,6 +118,10 @@ PROJECTED_MZML_GIB="$(awk -v n="${N_RUNS}" -v m="${MEAN_RAW_GIB}" -v r="${MZML_R
 PROJECTED_PEAK_GIB="$(awk -v z="${PROJECTED_MZML_GIB}" -v m="${MEAN_RAW_GIB}" \
     'BEGIN {printf "%.1f", z+m+2}')"
 
+PROJ_LOG="${REPO_ROOT}/logs/00_configure_projection.txt"
+mkdir -p "${REPO_ROOT}/logs"
+exec > >(tee -a "${PROJ_LOG}") 2>&1
+echo "# ---- $(date -u +%Y-%m-%dT%H:%M:%SZ) ----"
 echo "Machine and projection"
 echo "  threads available           ${THREADS}"
 echo "  RAM available               ${RAM_GB} GiB"
