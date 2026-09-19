@@ -55,7 +55,8 @@ PROV="${RESULTS_DIR}/fasta_provenance.txt"
 
 # Clean up a partial download rather than leaving a truncated FASTA that the
 # next stage would happily search against.
-cleanup() { [[ -n "${TMPF:-}" && -f "${TMPF}" ]] && rm -f "${TMPF}"; }
+# See 03_fetch_raw.sh: a trap ending on a failed test rewrites the exit code.
+cleanup() { [[ -n "${TMPF:-}" && -f "${TMPF}" ]] && rm -f "${TMPF}"; return 0; }
 trap cleanup EXIT
 
 if [[ -f "${TARGET_FASTA}" && "${FORCE}" != "true" ]]; then
