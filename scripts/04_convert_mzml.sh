@@ -22,6 +22,8 @@ Streams RAW to gzipped mzML. Fetches each RAW first if it is missing.
 
 Options:
   --limit <N>     convert only the first N runs of the selection
+  --runs <a,b>    convert exactly these run names, comma separated. Used for
+                  validation runs on a machine that cannot hold the full set
   --subset        one technical replicate per culture (6 runs, not 18)
   --keep-raw      do not delete RAW after conversion (needs far more disk)
   --no-fetch      fail rather than download a RAW that is not already present
@@ -30,10 +32,11 @@ Options:
 USAGE
 }
 
-LIMIT=""; SUBSET_FLAG=""; KEEP_RAW="false"; NO_FETCH="false"; FORCE="false"
+LIMIT=""; SUBSET_FLAG=""; KEEP_RAW="false"; NO_FETCH="false"; FORCE="false"; RUNS=""
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --limit)    LIMIT="$2"; shift 2 ;;
+        --runs)     RUNS="$2"; shift 2 ;;
         --subset)   SUBSET_FLAG="true"; shift ;;
         --keep-raw) KEEP_RAW="true"; shift ;;
         --no-fetch) NO_FETCH="true"; shift ;;
@@ -63,7 +66,10 @@ PARTIAL=""
 cleanup() { [[ -n "${PARTIAL}" && -f "${PARTIAL}" ]] && rm -f "${PARTIAL}"; return 0; }
 trap cleanup EXIT INT TERM
 
-if [[ "${SUBSET}" == "true" ]]; then
+if [[ -n "${RUNS}" ]]; then
+    mapfile -t LINES < <(awk -F'\t' -v want=",${RUNS}," 'NR>1 && index(want, ","$1",")' "${SAMPLES}")
+    [[ "${#LINES[@]}" -gt 0 ]] || die "none of the requested runs are in the sample sheet"
+elif [[ "${SUBSET}" == "true" ]]; then
     mapfile -t LINES < <(awk -F'\t' 'NR>1 && $8==1' "${SAMPLES}")
 else
     mapfile -t LINES < <(tail -n +2 "${SAMPLES}")
