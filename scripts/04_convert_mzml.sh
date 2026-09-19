@@ -133,9 +133,19 @@ for line in "${LINES[@]}"; do
     gzip --test "${mzml}" || die "${mzml##*/} is not valid gzip"
     # An mzML that opens is not necessarily an mzML with spectra in it, so
     # check the root element and that at least one spectrum was written.
-    if ! zcat "${mzml}" | head -c 4000 | grep -qE '<(indexedmzML|mzML)'; then
+    #
+    # The header is captured into a variable rather than piped straight into
+    # grep. "zcat file | head -c 4000 | grep -q" looks fine and is a trap
+    # under "set -o pipefail": head closes the pipe as soon as it has its
+    # 4000 bytes, zcat dies of SIGPIPE with status 141, and the pipeline
+    # reports failure even though grep matched. That turned a good 417 MB
+    # mzML into "does not look like mzML" and the cleanup trap deleted it.
+    header="$(zcat "${mzml}" 2>/dev/null | head -c 4000 || true)"
+    if ! grep -qE '<(indexedmzML|mzML)' <<< "${header}"; then
         die "${mzml##*/} does not look like mzML"
     fi
+    # grep consumes the whole stream here, so there is no SIGPIPE to worry
+    # about; the "|| true" is only for the case of zero matches.
     nspec="$(zcat "${mzml}" | grep -c '<spectrum ' || true)"
     [[ "${nspec}" -gt 0 ]] || die "${mzml##*/} contains no spectra"
     PARTIAL=""
