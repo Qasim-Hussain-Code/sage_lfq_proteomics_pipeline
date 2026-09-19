@@ -66,12 +66,13 @@ create_env() {
 }
 
 if [[ "${R_ONLY}" != "true" ]]; then
-    # sage-proteomics carries the Sage binary. thermorawfileparser 1.4.x is a
-    # .NET Framework build and the bioconda recipe pulls Mono in for it; the
-    # 2.x line is .NET 8 and self-contained but is still tagged as a dev
-    # release, so the stable 1.4 line plus Mono is the conservative choice.
-    # 02_fetch_fasta.sh onwards only ever calls these through the env, so
-    # swapping in the 2.x binary later changes nothing else.
+    # sage-proteomics carries the Sage binary. On the run that produced the
+    # results in this repository the solver picked thermorawfileparser
+    # 2.0.0.dev, which is the .NET 8 self-contained build, so no Mono was
+    # pulled in and the environment came to 294 MB. I had expected the stable
+    # 1.4.x line and a Mono dependency; pinning 1.4.x here would get that
+    # instead. Both write the same gzipped mzML, so the rest of the pipeline
+    # does not care which one is present.
     create_env "${CONDA_ENV_MS}" \
         --channel conda-forge --channel bioconda \
         sage-proteomics thermorawfileparser csvtk aria2 curl
