@@ -33,7 +33,11 @@ done
 # This script is excluded from its own scans: it necessarily contains the
 # banned phrase list and the dash characters it is searching for, and
 # counting those would make a clean repository report as dirty.
-SCAN=('*.md' '*.sh' '*.R' '*.py' '*.json' '*.tsv' ':(exclude)scripts/verify_repo.sh')
+# Prose files only. Quantification tables are excluded because peptide
+# sequences are strings of amino acid letters and some of them spell banned
+# English words: DELVE (Asp-Glu-Leu-Val-Glu) is a real tryptic peptide in
+# results/sage/lfq.tsv, and flagging it as machine prose would be silly.
+SCAN=('*.md' '*.sh' '*.R' '*.py' ':(exclude)scripts/verify_repo.sh')
 
 note "3. em dashes and emojis in tracked text"
 # U+2014 em dash, U+2013 en dash, and the common emoji blocks.
