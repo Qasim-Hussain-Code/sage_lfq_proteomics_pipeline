@@ -109,6 +109,39 @@ if [[ ! -s "${SAGE_RES}" ]]; then
     exit 0
 fi
 
+# Match the designs before comparing. The MaxQuant arm above runs on all
+# eighteen deposited runs, because it can: it needs no RAW files. The Sage
+# arm may have run on fewer, for instance the six run subset on a machine
+# that could not hold eighteen mzML. Comparing a six run Sage result against
+# an eighteen run MaxQuant result would confound the search engine with the
+# number of replicates, and the engine is the only thing this comparison is
+# entitled to talk about. So when the two differ, the MaxQuant table is
+# re-analysed on exactly the runs Sage saw, and that matched result is what
+# gets compared.
+SAGE_RUNS="$(head -1 "${RESULTS_DIR}/peptide_matrix_sage.tsv" | cut -f3- | tr '\t' '\n' | sed '/^$/d')"
+N_SAGE_RUNS="$(printf '%s\n' "${SAGE_RUNS}" | wc -l)"
+N_ALL_RUNS="$(($(wc -l < "${CONFIG_DIR}/samples.tsv") - 1))"
+MQ_COMPARE_PREFIX="maxquant"
+if [[ "${N_SAGE_RUNS}" -ne "${N_ALL_RUNS}" ]]; then
+    echo "09_compare_maxquant: Sage saw ${N_SAGE_RUNS} of ${N_ALL_RUNS} runs."
+    echo "09_compare_maxquant: re-running the MaxQuant arm on the same ${N_SAGE_RUNS} runs"
+    MATCHED_SAMPLES="${RESULTS_DIR}/samples_matched.tsv"
+    head -1 "${CONFIG_DIR}/samples.tsv" > "${MATCHED_SAMPLES}"
+    while IFS= read -r r; do
+        awk -F'\t' -v want="${r}" 'NR>1 && $1==want' "${CONFIG_DIR}/samples.tsv" >> "${MATCHED_SAMPLES}"
+    done <<< "${SAGE_RUNS}"
+    MQ_COMPARE_PREFIX="maxquant_matched"
+    if [[ ! -s "${RESULTS_DIR}/${MQ_COMPARE_PREFIX}_protein_results_mixed.tsv" || "${FORCE}" == "true" ]]; then
+        measure_run "09_differential:${MQ_COMPARE_PREFIX}" \
+            conda run --no-capture-output --name "${CONDA_ENV_R}" \
+            Rscript "${REPO_ROOT}/scripts/differential.R" \
+                --matrix "${MQ_MATRIX}" --samples "${MATCHED_SAMPLES}" \
+                --outdir "${RESULTS_DIR}" --prefix "${MQ_COMPARE_PREFIX}" \
+                --min-cultures "${MIN_CULTURES}" \
+            2>&1 | tee "${LOGS_DIR}/09_differential_${MQ_COMPARE_PREFIX}.log"
+    fi
+fi
+
 # UniProt accession to RefSeq, so the two engines' protein identifiers can be
 # compared. Sage reports UniProt because that is the database it searched;
 # the authors reported RefSeq because that is what they searched.
@@ -136,7 +169,7 @@ echo "09_compare_maxquant: $(($(wc -l < "${MAPPING}") - 1)) UniProt to RefSeq pa
 conda run --no-capture-output --name "${CONDA_ENV_R}" \
     Rscript "${REPO_ROOT}/scripts/compare_engines.R" \
         --sage "${SAGE_RES}" \
-        --maxquant "${RESULTS_DIR}/maxquant_protein_results_mixed.tsv" \
+        --maxquant "${RESULTS_DIR}/${MQ_COMPARE_PREFIX}_protein_results_mixed.tsv" \
         --mapping "${MAPPING}" \
         --sage-matrix "${RESULTS_DIR}/peptide_matrix_sage.tsv" \
         --maxquant-matrix "${MQ_MATRIX}" \
