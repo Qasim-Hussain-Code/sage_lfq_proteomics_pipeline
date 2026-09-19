@@ -1,5 +1,5 @@
 # Resolved tool versions
-# Written by scripts/01_install.sh on 2026-09-19T13:02:16Z
+# Written by scripts/01_install.sh on 2026-09-19T13:19:12Z
 # Host: Linux 7.0.0-31-generic x86_64
 
 [sage-lfq-ms]
@@ -11,3 +11,12 @@ thermorawfileparser        2.0.0.dev        h9ee0642_1        bioconda
 sage --version: sage 0.14.6
 ThermoRawFileParser: 2.0.0.0
 
+[sage-lfq-r]
+R version 4.5.3 (2026-03-11) 
+QFeatures              1.20.0
+msqrob2                1.18.0
+MsCoreUtils            1.22.1
+limma                  3.66.0
+BiocParallel           1.44.0
+SummarizedExperiment   1.40.0
+ggplot2                4.0.3
