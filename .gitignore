@@ -37,3 +37,11 @@ envs/
 *.swp
 .DS_Store
 __pycache__/
+
+# Regenerable analysis intermediates. The densities table is one row per
+# peptide per run per stage and runs to about 10 MB; the QFeatures object is
+# a binary blob. Both are rebuilt by differential.R in under a minute, and
+# neither is a result anyone would read. The tables that are results, and
+# every figure, stay tracked.
+results/*_normalisation_densities.tsv
+results/*_qfeatures.rds
