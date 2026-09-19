@@ -19,12 +19,13 @@ Options:
   --config <path>       override the base config (default: config/sage_lfq.json)
   --batch-size <N>      files loaded and searched at once (default: 1)
   --parallel            set parallel:true in the config, faster and hungrier
-  --allow-telemetry     do not pass --disable-telemetry to Sage
+  --allow-telemetry     do not pass the opt-out flag to Sage
   --force               rerun even if results.sage.tsv already exists
   --help                show this message
 
-Telemetry: Sage sends a small startup report unless told not to. This script
-passes --disable-telemetry by default. See the README for what is sent.
+Telemetry: Sage sends a startup report unless told not to. This script opts
+out by default. The flag is spelled, in full and not by my choice,
+--disable-telemetry-i-dont-want-to-improve-sage. See the README.
 USAGE
 }
 
@@ -96,7 +97,7 @@ PY
 
 SAGE_ARGS=(--batch-size "${BATCH_SIZE}")
 if [[ "${ALLOW_TELEMETRY}" != "true" ]]; then
-    SAGE_ARGS+=(--disable-telemetry)
+    SAGE_ARGS+=(--disable-telemetry-i-dont-want-to-improve-sage)
 fi
 
 echo "05_run_sage: searching with batch-size ${BATCH_SIZE}, parallel=${PARALLEL_FLAG}"

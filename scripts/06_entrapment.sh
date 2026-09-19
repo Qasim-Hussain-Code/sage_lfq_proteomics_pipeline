@@ -126,7 +126,8 @@ PY
     echo "06_entrapment: searching ${N_TOT} sequences"
     measure_run "06_entrapment_search" \
         conda run --no-capture-output --name "${CONDA_ENV_MS}" \
-        sage --batch-size "${SAGE_BATCH_SIZE:-1}" --disable-telemetry "${ENT_CONFIG}" \
+        sage --batch-size "${SAGE_BATCH_SIZE:-1}" \
+        --disable-telemetry-i-dont-want-to-improve-sage "${ENT_CONFIG}" \
         2>&1 | tee "${LOGS_DIR}/06_entrapment_search.log"
     [[ -f "${OUTDIR}/results.json" ]] && cp "${OUTDIR}/results.json" "${RESULTS_DIR}/sage_entrapment_results.json"
 fi
